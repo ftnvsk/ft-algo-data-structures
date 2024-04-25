@@ -13,6 +13,14 @@ public class binarySearch {
     }
 /*     ------- cu metoda de mai jos scade perf daca vorbim o lista fff mare si timpul de executie e mai mare
                pentru ca incepe de la primul item din lista si duce pana la capat pana nu gaseste target-ul
+
+               ------------------------------------------------------------
+
+               UPDATE: Aici avem o complexitate de timp de tipul liniar, adica cu cat cat mai multe elemente are
+               Array-ul/lista sau cu cat mai mare este ceva, cu atat mai mult timp, pentru executie, e necesar
+               ca sa se treaca prin toate elementele. Practic worst case scenario:
+               sunt 100 elemente, noi cautam al 100lea element, sa presupunem ca 1 element ne ia 1 minut, atunci
+               ne ar trebuie 100 minute ca sa gasim elementul dorit (in cazul nostru ultimul)
  */
 
 //    public static int search(int[] nums, int target) {
@@ -33,6 +41,18 @@ public class binarySearch {
         mijlocul, atunci elementul imediat de dupa mijlocul devine noua granita de stanga, si recalculam noul mijloc
         si practic am redus lista (acelasi principiu cu granita dreapta dar cu minus) si tot asa
         pana cand mijlocul este egal cu target-ul
+
+        ------------------------------------------------------------
+
+        UPDATE: In schimb aici timp de executie este imbunatatit, pentru ca cu fiecare executare de loop, lista se
+        injumatateste, practic reducand nr-ul de executii/loop-uri. Luand acelasi exemplu ca la explicatia de la
+        For-Loop (100 elem in lista, 1min per element, cautam ultimul):
+        Aici cu binary search incepem practic reducand timpul la 50min, pentru ca am stabilit ca numarul cautat
+        se afla in a 2a jumatate (51-100). Mergand asa pe logica asta, urmatoarea jumatate ar fi 76-100, urmata de
+        89-100, urmata de 95-100, urmata de 98-100, urmata de 100, si ca timp ne ar lua cam aprox. 13min.
+        (practic trecem prin 13 loop-uri/executii/pasi)
+
+        Si cred ca putem considera lejer ca 13min < 100min ==> less exec. time is better :)
 */
 
     public static int search(int[] nums, int target) {
