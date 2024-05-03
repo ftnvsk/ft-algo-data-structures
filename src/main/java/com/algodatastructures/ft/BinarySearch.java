@@ -1,14 +1,19 @@
-import java.lang.reflect.Array;
+package com.algodatastructures.ft;
+
 import java.util.Arrays;
 
-public class binarySearch {
+public class BinarySearch {
     public static void main(String[] args) {
 
         int[] nrs = {-11, 2, 4, 6, 8, 9, 10, 11, 12, 33, 55, 66, 77, 23456, 34567, 99999};
         int trgt = 2;
+        String strToCheck = "calabalac";
 
         System.out.println("Lista: " + Arrays.toString(nrs));
         System.out.println("Din lista data, numarul " + trgt + " se afla pe index: " + search(nrs, trgt));
+
+        System.out.println("\nOare cuvantul '" + strToCheck + "' este palindrom?");
+        System.out.println(Recursivitate.isPalindrome(strToCheck));
 
     }
 /*     ------- cu metoda de mai jos scade perf daca vorbim o lista fff mare si timpul de executie e mai mare
@@ -53,6 +58,9 @@ public class binarySearch {
         (practic trecem prin 13 loop-uri/executii/pasi)
 
         Si cred ca putem considera lejer ca 13min < 100min ==> less exec. time is better :)
+
+        UPDATE 2:
+                 O(log N) complexity: Binary search reduce spatiul de cautare la jumatate cu fiecare iteratie
 */
 
     public static int search(int[] nums, int target) {
