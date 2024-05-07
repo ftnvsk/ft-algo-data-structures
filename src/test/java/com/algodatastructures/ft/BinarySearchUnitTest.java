@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Test;
 
 public class BinarySearchUnitTest {
 
+    int[] nums = {1, 2, 3, 5, 7, 11, 13, 17};
+
     @Test
     public void testSearchNumberNotFound() {
-        int[] nums = {1, 2, 3, 5, 7, 11, 13, 17};
         int target = 4;
         Assertions.assertEquals(-1, BinarySearch.search(nums, target),
                 "Numarul cautat ar trebui sa nu fie gasit");
@@ -15,7 +16,6 @@ public class BinarySearchUnitTest {
 
     @Test
     public void testSearchNumberAtStart() {
-        int[] nums = {1, 2, 3, 5, 7, 11, 13, 17};
         int target = 1;
         Assertions.assertEquals(0, BinarySearch.search(nums, target),
                 "Numarul cautat ar trebui sa fie la inceputul sirului");
@@ -23,7 +23,6 @@ public class BinarySearchUnitTest {
 
     @Test
     public void testSearchNumberInMiddle() {
-        int[] nums = {1, 2, 3, 5, 7, 11, 13, 17};
         int target = 7;
         Assertions.assertEquals(4, BinarySearch.search(nums, target),
                 "Numarul cautat ar trebui sa fie in mijlocul sirului");
@@ -31,7 +30,6 @@ public class BinarySearchUnitTest {
 
     @Test
     public void testSearchNumberAtEnd() {
-        int[] nums = {1, 2, 3, 5, 7, 11, 13, 17};
         int target = 17;
         Assertions.assertEquals(7, BinarySearch.search(nums, target),
                 "Numarul cautat ar trebui sa fie la sfarsitul sirului");

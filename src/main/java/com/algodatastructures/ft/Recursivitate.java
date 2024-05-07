@@ -11,6 +11,10 @@ public class Recursivitate {
      * String-ul in sir)
      *
      *
+     * UPDATE:
+     *         O(n) complexity: Ne arata faptul ca timpul necesar ca sa se execute metoda creste direct
+     *                          proportional cu marimea la 'n'
+     *
      */
 
     public static boolean isPalindrome(String str) {
