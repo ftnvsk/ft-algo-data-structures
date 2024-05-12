@@ -1,6 +1,10 @@
 package com.algodatastructures.ft;
 
 import java.util.Arrays;
+import com.algodatastructures.ft.ObjectOrientedProgramming.abstraction.Abstraction;
+import com.algodatastructures.ft.ObjectOrientedProgramming.encapsulation.Encapsulation.*;
+import com.algodatastructures.ft.ObjectOrientedProgramming.inheritance.Inheritance.*;
+import com.algodatastructures.ft.ObjectOrientedProgramming.polymorphism.Polymorphism.*;
 
 public class BinarySearch {
     public static void main(String[] args) {
@@ -14,6 +18,59 @@ public class BinarySearch {
 
         System.out.println("\nOare cuvantul '" + strToCheck + "' este palindrom?");
         System.out.println(Recursivitate.isPalindrome(strToCheck));
+
+        // -----------------
+
+        Abstraction abstraction = new Abstraction();
+
+        Abstraction.Circle circle = abstraction.new Circle(5.0);
+        Abstraction.Triangle triangle = abstraction.new Triangle(3.0, 4.0, 5.0);
+        Abstraction.Manager manager = abstraction.new Manager("Romba Bomba", 101, 50000, 1100);
+        Abstraction.Programmer programmer = abstraction.new Programmer("Goran Bregovic", 102, 150.51, 160);
+        BankAccount myAccount = new BankAccount("123456789", 1000.00);
+        Person person = new Person("John Doe", 2, "USA");
+        Cat myCat = new Cat();
+        Car myCar = new Car();
+        NewVehicle myNewCar = new NewCar();
+        NewVehicle myBicycle = new Bicycle();
+        Sports myFootball = new Football();
+        Sports myBasketball = new Basketball();
+        Sports myRugby = new Rugby();
+
+
+        // Access methods on these instances
+        System.out.println("Circle Area: " + circle.calculateArea());
+        System.out.println("Circle Perimeter: " + circle.calculatePerimeter());
+        System.out.println("Triangle Area: " + triangle.calculateArea());
+        System.out.println("Triangle Perimeter: " + triangle.calculatePerimeter());
+        manager.getEmployeeInfo();
+        programmer.getEmployeeInfo();
+        System.out.println("Initial Account Number: " + myAccount.getAccountNr());
+        System.out.println("Initial Balance: $" + myAccount.getAccBalance());
+        // Modify the account details
+        myAccount.setAccountNr("987654321");
+        myAccount.setAccBalance(5000.00);
+        // Display updated account details
+        System.out.println("Updated Account Number: " + myAccount.getAccountNr());
+        System.out.println("Updated Balance: $" + myAccount.getAccBalance());
+        System.out.println("Initial Name: " + person.getName());
+        System.out.println("Initial Age: " + person.getAge());
+        System.out.println("Initial Country: " + person.getCountry());
+        // Modify the person details
+        person.setName("Filip Bilip");
+        person.setAge(99);
+        person.setCountry("Macedonia");
+        // Display updated person details
+        System.out.println("Updated Name: " + person.getName());
+        System.out.println("Updated Age: " + person.getAge());
+        System.out.println("Updated Country: " + person.getCountry());
+        myCat.makeSound();
+        myCar.drive();
+        myNewCar.speedUp();
+        myBicycle.speedUp();
+        myFootball.play();
+        myBasketball.play();
+        myRugby.play();
 
     }
 /*     ------- cu metoda de mai jos scade perf daca vorbim o lista fff mare si timpul de executie e mai mare
