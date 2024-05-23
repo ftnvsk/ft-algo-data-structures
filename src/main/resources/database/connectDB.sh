@@ -9,5 +9,8 @@ postgres=# pg_dump -U postgres -d heiDB -f /backup/export_db.sql
 postgres-# pg_dump -U postgres -d heiDB -f C:/_LEARN_/ft-algo-data-structures/src/main/resources/database/backup/export_db.sql
 postgres-# pg_dump -U postgres -d heiDB -f C:/_LEARN_/ft-algo-data-structures/src/main/resources/database/backup/export_db.sql
 
+pg_dump -U postgres -h localhost -p 5432 "heiDB" > backupDb.sql
+psql -U postgres -h localhost -p 5432 -f queries.sql
+
 EOF
 
