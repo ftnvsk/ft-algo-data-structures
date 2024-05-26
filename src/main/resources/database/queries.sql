@@ -1,7 +1,7 @@
 -- a) cream o noua db cu numele 'heiDB', dar daca deja exista o stergem
-DROP DATABASE IF EXISTS heiDB;
+DROP DATABASE IF EXISTS "heiDB";
 
-CREATE DATABASE heiDB;
+CREATE DATABASE "heiDB";
 
 -- b) Cream tabelul 'Persoane', daca deja exista il stergem
 DROP TABLE IF EXISTS Persoane;
@@ -42,24 +42,27 @@ DELETE FROM Persoane WHERE IDPersoana = 2;
 -- Selectarea tuturor persoanelor
 SELECT * FROM Persoane;
 
-
 ---------------------------------- UPDATE 2 : ---------------------------------------
 
 -- 1. Mai jos avem un ALTER TABLE, care modifica tabelul adaugand o coloana noua numita DataNasterii si cu si tipul de data ca fiind DATE
 ALTER TABLE Persoane ADD COLUMN DataNasterii DATE;
+SELECT * FROM Persoane;
 
 -- 1.1. Populam tabela cu date in DataNasterii pentru fiecare rand unde e gol, folosind RANDOM
-
+UPDATE Persoane SET DataNasterii = DATE '1940-01-01' + CAST((RANDOM() * (DATE '2024-05-21' - DATE '1940-01-01')) AS INTEGER);
 
 -- 2. Mai jos avem ALTER TABLE, pentru a adauga coloana Gen de tip TEXT
 ALTER TABLE Persoane ADD COLUMN Gen TEXT;
+SELECT * FROM Persoane;
 
--- 2.1. Populam tabela cu Gen pentru fiecare rand unde e gol, folosind RANDOM care genereaza cifre random, si daca cifra e para atunci M, daca e impara atunci F
+-- 2.1. Populam tabela cu Gen pentru fiecare rand unde e gol, folosind RANDOM care genereaza cifre random,
+-- si daca cifra e para atunci M, daca e impara atunci F
 UPDATE Persoane SET Gen = CASE
-                          WHEN RANDOM() % 2 = 0 THEN 'M'
+                          WHEN (CAST(RANDOM() as INTEGER) < 1) THEN 'M'
                           ELSE 'F'
 END
 WHERE Gen IS NULL;
+SELECT * FROM Persoane;
 
 -- 3. Cu query-ul de mai jos facem un select care ne ia toate randurile unde avem Adresa = NULL, si cand ni le afiseaza,
 -- folosim COALESCE sa inlocuium acel NULL cu ce dorim sa vedem noi
@@ -79,7 +82,8 @@ SELECT Nume, Prenume FROM Persoane WHERE Nume LIKE '%escu';
 -- 6. Folosind WHERE facem o filtrare la un tabel. In cazul nostru facem o filtrare intrun anumit range
 SELECT Nume, Prenume, DataNasterii FROM Persoane WHERE DataNasterii BETWEEN '1940-01-01' AND '2000-12-31';
 
--- 7. Folosind ORDER cerem ca informatia din tabel sa ne fie afisata sortata dupa o anume coloana si cum dorim sa o sortam ( de la mic la mare sau invers)
+-- 7. Folosind ORDER cerem ca informatia din tabel sa ne fie afisata sortata dupa o anume coloana si cum dorim sa o
+-- sortam ( de la mic la mare sau invers)
 SELECT Nume, Prenume FROM Persoane ORDER BY Prenume ASC;
 
 
