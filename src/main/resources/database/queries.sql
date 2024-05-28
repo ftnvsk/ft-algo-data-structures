@@ -3,6 +3,9 @@ DROP DATABASE IF EXISTS "heiDB";
 
 CREATE DATABASE "heiDB";
 
+-- connect to heiDB
+\c "heiDB";
+
 -- b) Cream tabelul 'Persoane', daca deja exista il stergem
 DROP TABLE IF EXISTS Persoane;
 CREATE TABLE Persoane (
