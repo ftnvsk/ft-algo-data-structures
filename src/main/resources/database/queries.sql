@@ -94,3 +94,65 @@ SELECT Nume, Prenume FROM Persoane ORDER BY Prenume ASC;
 -- cea ce facem mai jos este sa afisam doar coloana Gen din tabelul Persoane, unde numaram de cate ori apar valorile din
 -- coloana Gen si le afisam sub numele 'totalPerGen' si la final grupam/asezam rezultatele pe baza valorile din coloana Gen
 SELECT Gen, COUNT(*) AS totalPerGen FROM Persoane GROUP BY Gen;
+
+
+--------------- COLUMN INDEXING -------------------------------------------------------------
+
+DROP TABLE IF EXISTS Persons;
+
+-- Cream tabelul Persons din tabelul Persoane
+CREATE TABLE Persons AS TABLE Persoane;
+
+-- Populam 'Persons' cu aceleasi date existente de 2Mil de ori (avand deja 5 randuri - le copiam) adica 2 x 5 = 10 etc
+-- Pornirea cronometrajului
+-- la 10k persoane: 9.133 ms
+-- la 100k persoane: 119.218 ms
+-- la 1M persoane: 1326.773 ms
+-- la 10M persoane: 31710.077 ms
+\timing on
+INSERT INTO Persons (Nume, Prenume, Adresa, Oras, DataNasterii)
+SELECT
+    Nume,
+    Prenume,
+    Adresa,
+    Oras,
+    DataNasterii
+FROM
+    Persoane,
+    generate_series(1, 2000000);
+-- Oprirea cronometrajului
+\timing off
+
+-- Pornirea cronometrajului
+\timing on
+-- Aici mai jos facu 5 selecturi si loghez timpul lor de executie
+-- la 10k persoane: 1.052 ms / 0.844 ms / 0.972 ms / 0.879 ms / 0.873 ms
+-- la 100k persoane: 8.126 ms / 6.394 ms / 6.704 ms / 6.171 ms / 7.604 ms
+-- la 1M persoane: 57.577 ms / 136.296 ms / 61.740 ms / 47.971 ms / 48.313 ms
+-- la 10M persoane: 800.074 ms / 457.272 ms / 450.067 ms / 445.183 ms / 448.597 ms
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+-- Oprirea cronometrajului
+\timing off
+
+-- Crearea indexului pe coloana Nume
+CREATE INDEX idx_persons_nume ON Persons(Nume);
+
+-- Pornirea cronometrajului
+\timing on
+-- Aici mai jos facu 5 selecturi si loghez timpul lor de executie
+-- la 10k persoane: 1.232 ms / 0.608 ms / 0.563 ms / 0.530 ms / 0.479 ms
+-- la 100k persoane: 8.035 ms / 3.470 ms / 3.222 ms / 2.944 ms / 2.728 ms
+-- la 1M persoane: 24.266 ms / 23.625 ms / 21.390 ms / 20.740 ms / 26.454 ms
+-- la 10M persoane: 2696.856 ms / 2461.581 ms / 2471.359 ms / 2433.547 ms / 2452.247 ms
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
+-- Oprirea cronometrajului
+\timing off
+
