@@ -119,7 +119,7 @@ SELECT
     DataNasterii
 FROM
     Persoane,
-    generate_series(1, 2000000);
+    generate_series(1, 2);
 -- Oprirea cronometrajului
 \timing off
 
@@ -156,3 +156,63 @@ SELECT COUNT(nume) FROM Persons WHERE nume = 'Radu';
 -- Oprirea cronometrajului
 \timing off
 
+
+
+------------------- JOINS -----------------------------------------------------------
+
+DROP TABLE IF EXISTS Comenzi;
+-- Mai jos cream tabela Comenzi si ii spunem ca foreign key sa fie coloana IDPersoana din tabelul Persoane
+CREATE TABLE Comenzi (
+    IDComanda SERIAL PRIMARY KEY,
+    NumeProdus TEXT,
+    IDPersoana INTEGER REFERENCES Persoane(IDPersoana),
+    Data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Avand deja ID la Vasile si Petre, adica 4 si 5, facem insert pentru ID-urile alea
+INSERT INTO Comenzi (NumeProdus, IDPersoana) VALUES ('Bicicleta', 4);
+INSERT INTO Comenzi (NumeProdus, IDPersoana) VALUES ('Laptop', 5);
+SELECT * FROM Comenzi;
+
+-- INSERT la o persoana care nu exista in Persoane
+-- Cand rulam comanda de mai jos ne da e eroare care spune:
+
+-- psql:queries.sql:179: ERROR:  insert or update on table "comenzi" violates foreign key constraint "comenzi_idpersoana_fkey"
+--DETAIL:  Key (idpersoana)=(999) is not present in table "persoane".
+
+-- Eroare de mai spune spune ca noi incercam sa facem un insert la o persoane care nu exista cu ID 999 in tabelul
+-- de sursa, adica Persoane. Eroare apare din cauza la foreign key-ul care cauta informatia in Primary key din
+-- cealalta tabela
+INSERT INTO Comenzi (NumeProdus, IDPersoana) VALUES ('Telefon', 999);
+
+-- Aici avem un select care ne afiseaza date din ambele tabele
+-- Mai exact, select-ul de mai jos ne aduce Numele, Prenumele din tabelul Persoane, numele la produs si data comenzii
+-- din tabelul Comenzi si ne afiseaza o noua informatia cu detalii privind detaliile comenzilor si cine le a plasat
+SELECT P.Nume, P.Prenume, C.NumeProdus, C.IDComanda, C.Data
+FROM Persoane P
+JOIN Comenzi C ON P.IDPersoana = C.IDPersoana;
+
+-- Mai jos facem un select care face count in tabelul Persoane cu un JOIN din tabelul Comenzi si ne afiseaza
+-- datele confirm filtrului cerut la randul cu WHERE
+SELECT COUNT(*) FROM Persoane P
+JOIN Comenzi C ON P.IDPersoana = C.IDPersoana
+WHERE C.NumeProdus = 'Laptop' AND P.Oras = 'Iasi';
+
+
+-- ALTE EXEMPLE DE JOIN:
+-- Left Join:
+-- cu Left Join returnam toate datele din tabelul din stanga (practic primul tabel, care vine dupa FROM) si toate datele
+-- din tabelul din dreapta (al 2lea tabel practic, care vine dupa JOIN) care corespund criteriei cerute
+-- Mai jos afisam toate persoanele si comenzile lor, inclusiv persoanele care nu au comenzi:
+SELECT P.Nume, P.Prenume, C.NumeProdus, C.Data
+FROM Persoane P
+LEFT JOIN Comenzi C ON P.IDPersoana = C.IDPersoana;
+
+-- Right Join:
+-- Right join e inversul la Left Join :D :D
+-- cu Right Join returnam toate datele din tabelul din dreapta (practic al 2lea tabel, care vine dupa FROM) si toate datele
+-- din tabelul din stanga (primul tabel practic, care vine dupa JOIN) care corespund criteriei cerute
+-- Mai jos afisam toate comenzile si cine le a comandat:
+SELECT P.Nume, P.Prenume, C.NumeProdus, C.Data
+FROM Persoane P
+RIGHT JOIN Comenzi C ON P.IDPersoana = C.IDPersoana;
