@@ -1,10 +1,15 @@
 package com.algodatastructures.ft;
 
 import java.util.Arrays;
+
+import com.algodatastructures.ft.ConstructorDependency.Emisiune;
+import com.algodatastructures.ft.ConstructorDependency.FurnizorServiciuConsumator;
+import com.algodatastructures.ft.ConstructorDependency.ServiciuTV;
 import com.algodatastructures.ft.ObjectOrientedProgramming.abstraction.Abstraction;
 import com.algodatastructures.ft.ObjectOrientedProgramming.encapsulation.Encapsulation.*;
 import com.algodatastructures.ft.ObjectOrientedProgramming.inheritance.Inheritance.*;
 import com.algodatastructures.ft.ObjectOrientedProgramming.polymorphism.Polymorphism.*;
+import com.algodatastructures.ft.ConstructorDependency.ServiciuYoutube;
 
 public class BinarySearch {
     public static void main(String[] args) {
@@ -136,5 +141,15 @@ public class BinarySearch {
         }
         return -1;
     }
+
+    // Utilizare ServiciuTV
+    Emisiune serviciuTV = new ServiciuTV();
+    FurnizorServiciuConsumator consumatorTV = new FurnizorServiciuConsumator(serviciuTV);
+    consumatorTV.procesareMesaje("Mesaj pentru TV");
+
+    // Utilizare ServiciuYoutube
+    Emisiune serviciuYoutube = new ServiciuYoutube();
+    FurnizorServiciuConsumator consumatorYoutube = new FurnizorServiciuConsumator(serviciuYoutube);
+    consumatorYoutube.procesareMesaje("Mesaj pentru YouTube");
 
 }
