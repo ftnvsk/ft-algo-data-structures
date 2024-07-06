@@ -2,9 +2,12 @@ package com.algodatastructures.ft;
 
 import java.util.Arrays;
 
+import com.algodatastructures.ft.BuilderPatern.DulciuriNoi;
 import com.algodatastructures.ft.ConstructorDependency.Emisiune;
 import com.algodatastructures.ft.ConstructorDependency.FurnizorServiciuConsumator;
 import com.algodatastructures.ft.ConstructorDependency.ServiciuTV;
+import com.algodatastructures.ft.FactoryPattern.Dulciuri;
+import com.algodatastructures.ft.FactoryPattern.DulciuriFactory;
 import com.algodatastructures.ft.ObjectOrientedProgramming.abstraction.Abstraction;
 import com.algodatastructures.ft.ObjectOrientedProgramming.encapsulation.Encapsulation.*;
 import com.algodatastructures.ft.ObjectOrientedProgramming.inheritance.Inheritance.*;
@@ -77,6 +80,42 @@ public class BinarySearch {
         myBasketball.play();
         myRugby.play();
 
+        System.out.println("-----------------------------------------------------------------------------------------");
+        // Utilizare ServiciuTV
+        Emisiune serviciuTV = new ServiciuTV();
+        FurnizorServiciuConsumator consumatorTV = new FurnizorServiciuConsumator(serviciuTV);
+        consumatorTV.procesareMesaje("Mesaj pentru TV");
+
+        // Utilizare ServiciuYoutube
+        Emisiune serviciuYoutube = new ServiciuYoutube();
+        FurnizorServiciuConsumator consumatorYoutube = new FurnizorServiciuConsumator(serviciuYoutube);
+        consumatorYoutube.procesareMesaje("Mesaj pentru YouTube");
+
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        // Factory Pattern
+        DulciuriFactory dulciuriFactory = new DulciuriFactory();
+        // Crearea unui obiect de tip Inghetata folosindu-ne factory
+        Dulciuri prajitura = dulciuriFactory.getDulciuri("inghetata", "TopGun", 15.0, false);
+        prajitura.descriere();
+        System.out.println("Pret: " + prajitura.getPret());
+        // Crearea unui obiect de tip Bomboane folosindu-ne de factory
+        Dulciuri bomboane = dulciuriFactory.getDulciuri("Bomboane", "BUCURIA din Moldova", 5.0, true);
+        bomboane.descriere();
+        System.out.println("Pret: " + bomboane.getPret());
+
+        // Buillder Pattern
+        // mai jos cream obiectul de tip DulciuriNoi cu ajutor la Builder-ul din clasa respectiva
+        DulciuriNoi dulciuriNoi = new DulciuriNoi.DulciuriNoiBuilder()
+                .setName("Cheesecake American")
+                .setPret(199.56)
+                .build();
+        // dupa ce am creat obiectul nostru cum il dorim noi de tip DulciuriNoi, afisam detaliile lui
+        System.out.println("Dulcuri noi create: " + dulciuriNoi.getName() + " cu pretul de " + dulciuriNoi.getPret() + " RON.");
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+
+
     }
 /*     ------- cu metoda de mai jos scade perf daca vorbim o lista fff mare si timpul de executie e mai mare
                pentru ca incepe de la primul item din lista si duce pana la capat pana nu gaseste target-ul
@@ -141,15 +180,5 @@ public class BinarySearch {
         }
         return -1;
     }
-
-    // Utilizare ServiciuTV
-    Emisiune serviciuTV = new ServiciuTV();
-    FurnizorServiciuConsumator consumatorTV = new FurnizorServiciuConsumator(serviciuTV);
-    consumatorTV.procesareMesaje("Mesaj pentru TV");
-
-    // Utilizare ServiciuYoutube
-    Emisiune serviciuYoutube = new ServiciuYoutube();
-    FurnizorServiciuConsumator consumatorYoutube = new FurnizorServiciuConsumator(serviciuYoutube);
-    consumatorYoutube.procesareMesaje("Mesaj pentru YouTube");
 
 }
