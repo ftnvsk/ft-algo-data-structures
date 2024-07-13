@@ -1,6 +1,6 @@
 package com.algodatastructures.ft;
 
-public class Recursivitate {
+public class RecursivitateExercise {
 
     /*
      * Cea ce facem este luam un String, si analizam fiecare litera din ambele captele daca sunt la fel,
@@ -16,6 +16,13 @@ public class Recursivitate {
      *                          proportional cu marimea la 'n'
      *
      */
+
+    public static void main(String[] args) {
+        String strToCheck = "calabalac";
+        System.out.println("Oare cuvantul '" + strToCheck + "' este palindrom?");
+        System.out.println(isPalindrome(strToCheck));
+        System.out.println("-----------------------------------------------------------------------------------------");
+    }
 
     public static boolean isPalindrome(String str) {
         if (str.length() <= 1) {

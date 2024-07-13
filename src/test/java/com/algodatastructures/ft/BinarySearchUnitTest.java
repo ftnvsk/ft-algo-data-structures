@@ -10,28 +10,28 @@ public class BinarySearchUnitTest {
     @Test
     public void testSearchNumberNotFound() {
         int target = 4;
-        Assertions.assertEquals(-1, BinarySearch.search(nums, target),
+        Assertions.assertEquals(-1, BinarySearchExercise.search(nums, target),
                 "Numarul cautat ar trebui sa nu fie gasit");
     }
 
     @Test
     public void testSearchNumberAtStart() {
         int target = 1;
-        Assertions.assertEquals(0, BinarySearch.search(nums, target),
+        Assertions.assertEquals(0, BinarySearchExercise.search(nums, target),
                 "Numarul cautat ar trebui sa fie la inceputul sirului");
     }
 
     @Test
     public void testSearchNumberInMiddle() {
         int target = 7;
-        Assertions.assertEquals(4, BinarySearch.search(nums, target),
+        Assertions.assertEquals(4, BinarySearchExercise.search(nums, target),
                 "Numarul cautat ar trebui sa fie in mijlocul sirului");
     }
 
     @Test
     public void testSearchNumberAtEnd() {
         int target = 17;
-        Assertions.assertEquals(7, BinarySearch.search(nums, target),
+        Assertions.assertEquals(7, BinarySearchExercise.search(nums, target),
                 "Numarul cautat ar trebui sa fie la sfarsitul sirului");
     }
 
