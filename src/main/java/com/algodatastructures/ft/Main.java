@@ -24,5 +24,8 @@ public class Main {
         System.out.println(" -------------- se ruleaza principii SOLID: -----------------------------------------");
         SolidExercise.main(args);
 
+        System.out.println(" -------------- se ruleaza DOCKER chestii: ------------------------------------------");
+        HelloDocker.main(args);
+
     }
 }
