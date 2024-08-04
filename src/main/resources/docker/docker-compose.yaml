@@ -1,0 +1,38 @@
+# cu docker compose putem sa definim cum si cand se ruleaza anumite servicii care fac parte din applicatie
+# cum ar fi setup local la environment, setup la db, etc., practic simplifica procesul de configurare
+# si instalare la un proiect nou
+
+
+version: '3.8'  # aici specificam cu care vers de Docker Compose o sa lucram
+
+services:
+  java-app:
+    image: openjdk:11  # ce vers de java o sa configuram
+    container_name: java-app  # nume la containerul pentru applicatia noastra
+    working_dir: /app  # unde se afla container-ul
+      # mai jos pornim Java
+    command: bash -c "javac src/main/java/com/algodatastructures/ft/Main.java && java -cp src/main/java com.algodatastructures.ft.Main"
+    healthcheck:
+      test: [ "CMD-SHELL", "echo 'Java app is running'" ]  # cu comanda asta verificam sanatatea aplicatiei Java (thank you google)
+      retries: 3  # de cat ori incercam sa rulam testul de sanatate pana il declaram oficial 'nesanatos'
+
+  postgres:
+    image: postgres:13  # aici specificam cu care versiune de PostgreSQL o sa lucram
+    # aici spunem ca postgres poate sa lucreze dupa ce java a mers OK
+    depends_on:
+      java-app:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: example  # user-ul pentru conectare la db
+      POSTGRES_PASSWORD: example  # parola pt db
+      POSTGRES_DB: example  # numele db-ului
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U example"]  # cu comanda asta verificam sanatatea db-ului (thank you google)
+      retries: 5  # de cat ori incercam sa rulam testul de sanatate pana il declaram oficial 'nesanatos'
+
+  redis:
+    image: redis:6  # aici specificam cu care versiune de redis o sa lucram
+    # mai jos specificam ca redis e dependent de postgres, adica pana cand postgres nu e gata si sanatos, nu incepe configurarea de redis
+    depends_on:
+      postgres:
+        condition: service_healthy  # pornim Redis doar daca PostgreSQL este sanatos
